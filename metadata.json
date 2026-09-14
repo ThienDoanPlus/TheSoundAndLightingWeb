@@ -1,0 +1,6 @@
+{
+  "name": "Dịch Vụ Âm Thanh Ánh Sáng Chuyên Nghiệp",
+  "description": "Cho thuê âm thanh karaoke tiệc, ánh sáng sân khấu sự kiện, trang trí tiệc cưới sang trọng, báo giá minh bạch và tư vấn tự động 24/7.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
