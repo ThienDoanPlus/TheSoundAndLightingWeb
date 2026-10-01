@@ -1,6 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Sparkles, Phone, ArrowRight, Mic2, Music, CheckCircle2, ShieldCheck, Clock } from "lucide-react";
 import { ContactSettings } from "../types";
+import { motion, animate } from "motion/react";
+
+const AnimatedNumber = ({ value, duration = 2, suffix = "", formatNumber = false }: { value: number, duration?: number, suffix?: string, formatNumber?: boolean }) => {
+  const [displayValue, setDisplayValue] = useState("0" + suffix);
+
+  useEffect(() => {
+    const controls = animate(0, value, {
+      duration,
+      ease: "easeOut",
+      onUpdate: (latest) => {
+        const val = Math.round(latest);
+        const formatted = formatNumber ? new Intl.NumberFormat('vi-VN').format(val) : val;
+        setDisplayValue(formatted + suffix);
+      }
+    });
+    return controls.stop;
+  }, [value, duration, suffix, formatNumber]);
+
+  return <span>{displayValue}</span>;
+};
 
 interface HeroBannerProps {
   settings: ContactSettings;
@@ -126,18 +146,39 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({ settings, onExploreServi
 
             {/* Quick Metrics Bar below card */}
             <div className="grid grid-cols-3 gap-3 mt-4">
-              <div className="bg-zinc-900/60 border border-zinc-800/80 rounded-xl p-3 text-center">
-                <p className="text-lg sm:text-xl font-extrabold text-amber-400">1.200+</p>
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="bg-zinc-900/60 border border-zinc-800/80 rounded-xl p-3 text-center hover:bg-zinc-800/60 transition-colors"
+              >
+                <p className="text-lg sm:text-xl font-extrabold text-amber-400">
+                  <AnimatedNumber value={1200} duration={2} formatNumber={true} suffix="+" />
+                </p>
                 <p className="text-[11px] text-zinc-400 font-medium">Sự Kiện Đã Làm</p>
-              </div>
-              <div className="bg-zinc-900/60 border border-zinc-800/80 rounded-xl p-3 text-center">
-                <p className="text-lg sm:text-xl font-extrabold text-emerald-400">100%</p>
+              </motion.div>
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="bg-zinc-900/60 border border-zinc-800/80 rounded-xl p-3 text-center hover:bg-zinc-800/60 transition-colors"
+              >
+                <p className="text-lg sm:text-xl font-extrabold text-emerald-400">
+                  <AnimatedNumber value={100} duration={2.5} suffix="%" />
+                </p>
                 <p className="text-[11px] text-zinc-400 font-medium">Chống Hú & Đạt Chuẩn</p>
-              </div>
-              <div className="bg-zinc-900/60 border border-zinc-800/80 rounded-xl p-3 text-center">
-                <p className="text-lg sm:text-xl font-extrabold text-yellow-400">24/7</p>
+              </motion.div>
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="bg-zinc-900/60 border border-zinc-800/80 rounded-xl p-3 text-center hover:bg-zinc-800/60 transition-colors"
+              >
+                <p className="text-lg sm:text-xl font-extrabold text-yellow-400">
+                  <AnimatedNumber value={24} duration={1.5} suffix="/7" />
+                </p>
                 <p className="text-[11px] text-zinc-400 font-medium">Hỗ Trợ Tận Nơi</p>
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
