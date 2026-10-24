@@ -4,9 +4,14 @@ import Groq from "groq-sdk";
 import { createServer as createViteServer } from "vite";
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT) || 3000;
 
 app.use(express.json());
+
+// Health / Keep-alive endpoint (dành cho UptimeRobot / ping giữ Render không ngủ)
+app.get("/ping", (_req, res) => {
+  res.status(200).send("pong");
+});
 
 // --- Authentication ---
 const ADMIN_PASSWORD = "admin123";
